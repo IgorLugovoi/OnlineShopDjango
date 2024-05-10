@@ -6,6 +6,72 @@ class ClothCategory(models.Model):
     slug = models.SlugField(max_length=50)
     is_visible = models.BooleanField(default=True)
     sort = models.IntegerField(default=0)
+    def __iter__(self):
+        for cloth in self.clothes.filter(is_visible = True):
+            yield cloth
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ('sort',)
+
+class Cloth(models.Model):
+    GENDER_CHOICES = [
+        ('male', 'Male'),
+        ('female', 'Female'),
+        ('unisex', 'Unisex'),
+    ]
+    COLOR_CHOICES = [
+        ('red', 'Red'),
+        ('blue', 'Blue'),
+        ('green', 'Green'),
+        ('black', 'Black'),
+        ('white', 'White'),
+        ('yellow', 'Yellow'),
+        ('pink', 'Pink'),
+        ('purple', 'Purple'),
+        ('brown', 'Brown'),
+        ('orange', 'Orange'),
+        ('gray', 'Gray'),
+        ('beige', 'Beige'),
+    ]
+    SIZE_CHOICES = [
+        ('XS', 'Extra Small'),
+        ('S', 'Small'),
+        ('M', 'Medium'),
+        ('L', 'Large'),
+        ('XL', 'Extra Large'),
+        ('XXL', 'Double Extra Large'),
+    ]
+    MATERIAL_CHOICES = [
+        ('cotton', 'Cotton'),
+        ('wool', 'Wool'),
+        ('polyester', 'Polyester'),
+        ('silk', 'Silk'),
+        ('leather', 'Leather'),
+        ('linen', 'Linen'),
+        ('cashmere', 'Cashmere'),
+        ('denim', 'Denim'),
+        ('velvet', 'Velvet'),
+        ('nylon', 'Nylon'),
+        ('spandex', 'Spandex'),
+        ('acrylic', 'Acrylic'),
+        ('rayon', 'Rayon'),
+    ]
+    name = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=50)
+    category = models.ForeignKey(ClothCategory, on_delete=models.CASCADE, related_name="cloth")
+    genre = models.CharField(max_length=50, choices=GENDER_CHOICES)
+    color = models.CharField(max_length=50, choices=COLOR_CHOICES)
+    size = models.CharField(max_length=50, choices=SIZE_CHOICES)
+    brand = models.CharField(max_length=50)
+    material = models.CharField(max_length=50, choices=MATERIAL_CHOICES)
+    description = models.TextField(blank=True)
+    price = models.DecimalField(max_digits=8,decimal_places=2)
+    is_visible = models.BooleanField(default=True)
+    sort = models.IntegerField(default=0)
+    photo = models.ImageField(upload_to="cloth", blank=True)
+
 
     def __str__(self):
         return self.name
