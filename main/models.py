@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.core.validators import RegexValidator
 # Create your models here.
 class ClothCategory(models.Model):
     name = models.CharField(max_length=50)
@@ -78,3 +78,21 @@ class Cloth(models.Model):
 
     class Meta:
         ordering = ('sort',)
+
+class Order(models.Model):
+    phone_regex = RegexValidator(regex=r'^\(+38)?\d(9,15)$',
+                                 message="Phone number must be entered in the format: '+380509999999'. Up to 15 digits allowed.")
+
+    name = models.CharField(max_length=50)
+    email = models.EmailField()
+    phone = models.CharField(max_length=20, validators=[phone_regex])
+    comment = models.TextField(blank=True)
+    is_processed = models.BooleanField(default=False)
+
+    create_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ('-create_at',)
