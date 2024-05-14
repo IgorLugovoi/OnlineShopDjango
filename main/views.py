@@ -4,6 +4,7 @@ from .forms import OrderForm
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from .models import Cloth
 
 # Create your views here.
 def home(request):
@@ -27,3 +28,10 @@ def order_view(request):
     else:
         form = OrderForm()
     return render(request, 'order.html', {'form': form})
+
+# views.py
+def show_category_items(request, category_id):
+    category = ClothCategory.objects.get(id=category_id)
+    items = Cloth.objects.filter(category=category_id)
+    return render(request, 'category_items.html', {'category': category, 'items': items})
+
