@@ -1,5 +1,5 @@
 from django.shortcuts import render
 
 # Create your views here.
-def shopItemHome(request):
-    return render(request, 'index.html')
+def ItemListHome(request):
+    return render(request, 'ite')

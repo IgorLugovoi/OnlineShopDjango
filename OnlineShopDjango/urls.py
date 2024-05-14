@@ -19,10 +19,12 @@ from django.urls import path
 from main.views import home
 from shopItem.views import shopItemHome
 from main.views import order_view
+from itemList.views import ItemListHome
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
-    path('shop/', shopItemHome, name='shopItemHome'),
+    # path('shop/', shopItemHome, name='shopItemHome'),
     path('order/', order_view, name='order'),
+    path('itemListHome/', ItemListHome, name='itemList'),
 ]
