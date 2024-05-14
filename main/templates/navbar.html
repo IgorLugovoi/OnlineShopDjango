@@ -10,7 +10,7 @@
                     <ul class="nav flex-column">
                         {% for category in categories %}
                         <li class="nav-item">
-                            <a href="" class="nav-link">{{ category }}</a>
+                            <a href="{% url 'category_items' category.id %}" class="nav-link">{{ category }}</a>
                         </li>
                         {% endfor %}
                     </ul>
@@ -28,8 +28,7 @@
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
                             <a href="index.html" class="nav-item nav-link active">Home</a>
-                            <a href="shop.html" class="nav-item nav-link">Shop</a>
-                            <a href="detail.html" class="nav-item nav-link">Shop Detail</a>
+                            <a href="http://127.0.0.1:8000/itemListHome/" class="nav-item nav-link">Shop</a>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu rounded-0 m-0">

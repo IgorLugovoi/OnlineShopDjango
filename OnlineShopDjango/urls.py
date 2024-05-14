@@ -22,6 +22,7 @@ from main.views import home
 from shopItem.views import shopItemHome
 from main.views import order_view
 from itemList.views import ItemListHome
+from main.views import show_category_items
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,4 +30,5 @@ urlpatterns = [
     # path('shop/', shopItemHome, name='shopItemHome'),
     path('order/', order_view, name='order'),
     path('itemListHome/', ItemListHome, name='itemListHome'),
+    path('category/<int:category_id>/', show_category_items, name='category_items'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
