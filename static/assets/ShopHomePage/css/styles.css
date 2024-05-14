@@ -6650,12 +6650,19 @@ textarea.form-control-lg {
   }
 }
 .placeholder-wave {
-  -webkit-mask-image: linear-gradient(130deg, #000 55%, rgba(0, 0, 0, 0.8) 75%, #000 95%);
-          mask-image: linear-gradient(130deg, #000 55%, rgba(0, 0, 0, 0.8) 75%, #000 95%);
-  -webkit-mask-size: 200% 100%;
-          mask-size: 200% 100%;
-  animation: placeholder-wave 2s linear infinite;
+    background-image: linear-gradient(130deg, #000 55%, rgba(0, 0, 0, 0.8) 75%, #000 95%);
+    -webkit-mask-size: 200% 100%;
+    mask-size: 200% 100%;
+    animation: placeholder-wave 2s linear infinite;
 }
+/*виправив*/
+/*.placeholder-wave {*/
+/*  -webkit-mask-image: linear-gradient(130deg, #000 55%, rgba(0, 0, 0, 0.8) 75%, #000 95%);*/
+/*          mask-image: linear-gradient(130deg, #000 55%, rgba(0, 0, 0, 0.8) 75%, #000 95%);*/
+/*  -webkit-mask-size: 200% 100%;*/
+/*          mask-size: 200% 100%;*/
+/*  animation: placeholder-wave 2s linear infinite;*/
+/*}*/
 
 
 .clearfix::after {
