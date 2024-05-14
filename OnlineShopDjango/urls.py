@@ -26,5 +26,5 @@ urlpatterns = [
     path('', home, name='home'),
     # path('shop/', shopItemHome, name='shopItemHome'),
     path('order/', order_view, name='order'),
-    path('itemListHome/', ItemListHome, name='itemList'),
+    path('itemListHome/', ItemListHome, name='itemListHome'),
 ]
