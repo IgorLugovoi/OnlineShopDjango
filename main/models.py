@@ -87,7 +87,7 @@ class Order(models.Model):
     email = models.EmailField()
     phone = models.CharField(max_length=20, validators=[phone_regex])
     comment = models.TextField(blank=True)
-    is_processed = models.BooleanField(default=False)
+    is_processed = models.BooleanField(default=True)
 
     create_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
@@ -97,7 +97,8 @@ class Order(models.Model):
     class Meta:
         ordering = ('-create_at',)
 
-class CartItem(models.Model):
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, related_name='order_items', on_delete=models.CASCADE)  # Поле для зв'язку з Order
     cloth = models.ForeignKey(Cloth, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
     total_price = models.DecimalField(max_digits=8, decimal_places=2)

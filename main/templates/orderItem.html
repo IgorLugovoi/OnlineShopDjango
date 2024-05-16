@@ -113,7 +113,7 @@
 <body>
     <h2>Cart</h2>
     <ul>
-        {% for item in cart_items %}
+        {% for item in order_items %}
         <li>
             <h3>{{ item.cloth.name }}</h3>
             <p>Quantity: {{ item.quantity }}</p>

@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.urls import path
 from main.views import home, view_cart_and_order,show_category_items
 from itemList.views import ItemListHome
-from shopItem.views import shop_item_detail,add_to_cart,clear_cart,cartItem
+from shopItem.views import shop_item_detail,add_to_cart,clear_cart,orderItem
 
 urlpatterns = [
     path('admin/', admin.site.urls),

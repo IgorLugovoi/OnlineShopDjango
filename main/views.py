@@ -5,19 +5,19 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Cloth
-from .models import CartItem
+from .models import OrderItem
 from django.db.models import Sum
 # Create your views here.
 def home(request):
     categories = ClothCategory.objects.filter(is_visible=True)
     form = OrderForm()
-    cart_items = CartItem.objects.all()
-    total_price = CartItem.objects.aggregate(total=Sum('cloth__price'))['total'] or 0
+    order_items = OrderItem.objects.all()
+    total_price = OrderItem.objects.aggregate(total=Sum('cloth__price'))['total'] or 0
 
     return render(request, 'main.html ', context= {
         'categories': categories,
         'form': form,
-        'cart_items': cart_items,
+        'order_items': order_items,
         'total_price': total_price,
     })
 
@@ -42,15 +42,22 @@ def show_category_items(request, category_id):
 
 # def view_cart(request):
 #     cart_items = CartItem.objects.all() # Отримуємо всі елементи кошика
-#     return render(request, 'cartItem.html', {'cart_items': cart_items})
+#     return render(request, 'orderItem.html', {'cart_items': cart_items})
 
 def view_cart_and_order(request):
-    cart_items = CartItem.objects.all()  # Отримуємо всі елементи кошика
+    order_items = OrderItem.objects.all()  # Отримуємо всі елементи кошика
 
     if request.method == 'POST':
         form = OrderForm(request.POST)
         if form.is_valid():
-            form.save()
+            order = form.save()
+            for item in order_items:
+                OrderItem.objects.create(
+                    order=order,
+                    cloth=item.cloth,
+                    quantity=item.quantity,
+                    total_price=item.total_price
+                )
             messages.success(request, 'Your order has been successfully submitted!')
             return redirect('home')
         else:
@@ -59,8 +66,8 @@ def view_cart_and_order(request):
         form = OrderForm()
 
     context = {
-        'cart_items': cart_items,
+        'order_items': order_items,
         'form': form,
     }
 
-    return render(request, 'cartItem.html', context)
+    return render(request, 'orderItem.html', context)
