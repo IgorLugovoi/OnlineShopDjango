@@ -80,7 +80,7 @@ class Cloth(models.Model):
         ordering = ('sort',)
 
 class Order(models.Model):
-    phone_regex = RegexValidator(regex=r'^\(+38)?\d(9,15)$',
+    phone_regex = RegexValidator(regex=r'^\+?38?\d{9,15}$',
                                  message="Phone number must be entered in the format: '+380509999999'. Up to 15 digits allowed.")
 
     name = models.CharField(max_length=50)
