@@ -5,15 +5,20 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Cloth
-
+from .models import CartItem
+from django.db.models import Sum
 # Create your views here.
 def home(request):
     categories = ClothCategory.objects.filter(is_visible=True)
     form = OrderForm()
+    cart_items = CartItem.objects.all()
+    total_price = CartItem.objects.aggregate(total=Sum('cloth__price'))['total'] or 0
 
     return render(request, 'main.html ', context= {
         'categories': categories,
         'form': form,
+        'cart_items': cart_items,
+        'total_price': total_price,
     })
 
 def order_view(request):
@@ -35,3 +40,6 @@ def show_category_items(request, category_id):
     items = Cloth.objects.filter(category=category_id)
     return render(request, 'category_items.html', {'category': category, 'items': items})
 
+def view_cart(request):
+    cart_items = CartItem.objects.all() # Отримуємо всі елементи кошика
+    return render(request, 'cartItem.html', {'cart_items': cart_items})

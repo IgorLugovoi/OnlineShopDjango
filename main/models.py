@@ -96,3 +96,11 @@ class Order(models.Model):
 
     class Meta:
         ordering = ('-create_at',)
+
+class CartItem(models.Model):
+    cloth = models.ForeignKey(Cloth, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+    total_price = models.DecimalField(max_digits=8, decimal_places=2)
+
+    def __str__(self):
+        return f"{self.quantity} of {self.cloth.name} - ${self.total_price}"
