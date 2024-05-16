@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            padding: 20px;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+</head>
+<body>
+    <h2>Cart</h2>
+    <ul>
+        {% for item in cart_items %}
+        <li>
+            <h3>{{ item.cloth.name }}</h3>
+            <p>Quantity: {{ item.quantity }}</p>
+            <p>Total Price: ${{ item.total_price }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'home' %}" class="btn">Home</a>
+    <a href="{% url 'clear_cart' %}" class="btn">Clear Cart</a>
+    <a href="{% url 'order' %}" class="btn">Proceed to Order</a>
+</body>
+</html>
