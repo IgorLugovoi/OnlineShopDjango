@@ -91,6 +91,7 @@ class Order(models.Model):
 
     create_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
+
     def __str__(self):
         return self.name
 
@@ -98,7 +99,7 @@ class Order(models.Model):
         ordering = ('-create_at',)
 
 class OrderItem(models.Model):
-    order = models.ForeignKey(Order, related_name='order_items', on_delete=models.CASCADE)  # Поле для зв'язку з Order
+    order = models.ForeignKey(Order, related_name='order_items', on_delete=models.CASCADE)  # Поле для зв'язку з Order, on_delete=models.CASCADE
     cloth = models.ForeignKey(Cloth, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
     total_price = models.DecimalField(max_digits=8, decimal_places=2)
