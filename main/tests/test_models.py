@@ -1,6 +1,6 @@
 import pytest
 from django.core.exceptions import ValidationError
-from ..models import ClothCategory, Cloth, Order, OrderItem
+from main.models import ClothCategory, Cloth, Order, OrderItem
 
 @pytest.mark.django_db
 def test_cloth_category_creation():
