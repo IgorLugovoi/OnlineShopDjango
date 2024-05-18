@@ -17,5 +17,6 @@ urlpatterns = [
     path('cart/clear/', clear_cart, name='clear_cart'),
     path('cart/', view_cart_and_order, name='cart_detail'),
     # path('cart/', cartItem, name='cart_detail'),
+    path('order/', orderItem, name='order_item'),  # додайте цей шаблон з відповідним ім'ям
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
