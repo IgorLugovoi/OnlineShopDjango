@@ -1,19 +1,24 @@
 from django.db import models
 from django.core.validators import RegexValidator
 # Create your models here.
+
+
 class ClothCategory(models.Model):
     name = models.CharField(max_length=50)
     slug = models.SlugField(max_length=50)
     is_visible = models.BooleanField(default=True)
     sort = models.IntegerField(default=0)
+
     def __iter__(self):
-        for cloth in self.clothes.filter(is_visible = True):
+        for cloth in self.clothes.filter(is_visible=True):
             yield cloth
+
     def __str__(self):
         return self.name
 
     class Meta:
         ordering = ('sort',)
+
 
 class Cloth(models.Model):
     GENDER_CHOICES = [
@@ -60,24 +65,29 @@ class Cloth(models.Model):
     ]
     name = models.CharField(max_length=50)
     slug = models.SlugField(max_length=50)
-    category = models.ForeignKey(ClothCategory, on_delete=models.CASCADE, related_name="cloth")
+    category = models.ForeignKey(
+        ClothCategory, on_delete=models.CASCADE, related_name="cloth")
     genre = models.CharField(max_length=50, choices=GENDER_CHOICES)
     color = models.CharField(max_length=50, choices=COLOR_CHOICES)
     size = models.CharField(max_length=50, choices=SIZE_CHOICES)
     brand = models.CharField(max_length=50)
     material = models.CharField(max_length=50, choices=MATERIAL_CHOICES)
     description = models.TextField(blank=True)
-    price = models.DecimalField(max_digits=8,decimal_places=2)
+    price = models.DecimalField(max_digits=8, decimal_places=2)
     is_visible = models.BooleanField(default=True)
     sort = models.IntegerField(default=0)
     photo = models.ImageField(upload_to="cloth", blank=True)
 
-
     def __str__(self):
         return self.name
 
+    def get_size_index(self):
+        size_order = ['XS', 'S', 'M', 'L', 'XL', 'XXL']
+        return size_order.index(self.size)
+
     class Meta:
         ordering = ('sort',)
+
 
 class Order(models.Model):
     phone_regex = RegexValidator(regex=r'^\+?38?\d{9,15}$',
@@ -98,8 +108,11 @@ class Order(models.Model):
     class Meta:
         ordering = ('-create_at',)
 
+
 class OrderItem(models.Model):
-    order = models.ForeignKey(Order, related_name='order_items', on_delete=models.CASCADE)  # Поле для зв'язку з Order, on_delete=models.CASCADE
+    # Поле для зв'язку з Order, on_delete=models.CASCADE
+    order = models.ForeignKey(
+        Order, related_name='order_items', on_delete=models.CASCADE)
     cloth = models.ForeignKey(Cloth, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
     total_price = models.DecimalField(max_digits=8, decimal_places=2)

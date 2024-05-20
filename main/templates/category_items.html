@@ -1,31 +1,76 @@
 {% extends 'index.html' %}
 
 {% block content %}
-<section class="py-5">
-    <div class="container px-4 px-lg-5 mt-5">
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            {% for cloth in items %}
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Product image-->
-                        <img class="card-img-top" src="/media/{{ cloth.photo }}" alt="..." />
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">{{ cloth.name }}</h5>
-                                <!-- Product price-->
-                                {{ cloth.price }}
+<div class="container px-4 px-lg-5 mt-5">
+    <div class="row">
+        <div class="col-md-3">
+            <form method="GET">
+                <div class="mb-3">
+                    <label for="size" class="form-label d-block">Sort by Size</label>
+                    <select id="size" name="size" class="form-select mb-3" onchange="this.form.submit()">
+                        <option value="">Select Size</option>
+                        {% for size in sizes %}
+                            <option value="{{ size }}" {% if size == selected_size %}selected{% endif %}>{{ size }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="price" class="form-label d-block">Sort by Price</label>
+                    <select id="price" name="price" class="form-select mb-3" onchange="this.form.submit()">
+                        <option value="">Select</option>
+                        <option value="asc" {% if selected_price == 'asc' %}selected{% endif %}>Price: Low to High</option>
+                        <option value="desc" {% if selected_price == 'desc' %}selected{% endif %}>Price: High to Low</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="color" class="form-label d-block">Sort by Color</label>
+                    <select id="color" name="color" class="form-select mb-3" onchange="this.form.submit()">
+                        <option value="">Select Color</option>
+                        {% for color in colors %}
+                            <option value="{{ color }}" {% if color == selected_color %}selected{% endif %}>{{ color }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="material" class="form-label d-block">Sort by Material</label>
+                    <select id="material" name="material" class="form-select mb-3" onchange="this.form.submit()">
+                        <option value="">Select Material</option>
+                        {% for material in materials %}
+                            <option value="{{ material }}" {% if material == selected_material %}selected{% endif %}>{{ material }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-9">
+            <section class="py-5">
+                <div class="container px-4 px-lg-5 mt-5">
+                    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                        {% for cloth in items %}
+                            <div class="col mb-5">
+                                <div class="card h-100">
+                                    <!-- Product image-->
+                                    <img class="card-img-top" src="/media/{{ cloth.photo }}" alt="..." />
+                                    <!-- Product details-->
+                                    <div class="card-body p-4">
+                                        <div class="text-center">
+                                            <!-- Product name-->
+                                            <h5 class="fw-bolder">{{ cloth.name }}</h5>
+                                            <!-- Product price-->
+                                            {{ cloth.price }}
+                                        </div>
+                                    </div>
+                                    <!-- Product actions-->
+                                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'shop_item_detail' cloth.slug %}">View</a></div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'shop_item_detail' cloth.slug %}">View</a></div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
-            {% endfor %}
+            </section>
         </div>
     </div>
-</section>
+</div>
 {% endblock %}
